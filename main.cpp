@@ -1,4 +1,4 @@
-#include "Vector.h"
+#include "Vector.cpp"
 #include <locale.h>
 #include <random>
 
@@ -22,7 +22,8 @@ int main()
 		cout << "6 - добавить элемент" << endl;
 		cout << "7 - удалить элемент" << endl;
 		cout << "0 - выход" << endl;
-		int key, n = 0, j, x, min, max;
+		size_t key, n = 0, j;
+		int x, min, max;
 		cout << "Введите номер команды меню: ";
 		cin >> key;
 		if (key == 0)
@@ -34,7 +35,7 @@ int main()
 			// ввод (заполнение)
 			cout << "Введите число элементов вектора: ";
 			cin >> n;
-			for (int i = 0; i < n; i++)
+			for (size_t i = 0; i < n; i++)
 			{
 				cout << "Введите " << i + 1 << "-й элемент: ";
 				cin >> x;
