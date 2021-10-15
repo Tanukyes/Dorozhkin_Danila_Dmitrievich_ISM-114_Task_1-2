@@ -4,7 +4,7 @@
 using namespace std;
 
 /// <summary>
-/// Класс "одномерный массив"
+/// РљР»Р°СЃСЃ "РѕРґРЅРѕРјРµСЂРЅС‹Р№ РјР°СЃСЃРёРІ"
 /// </summary>
 /// <typeparam name="T"></typeparam>
 template<class T>
@@ -12,193 +12,87 @@ class Vector
 {
 private:
 	/// <summary>
-	/// Указатель на первый элемент массива 
+	/// РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР° 
 	/// </summary>
 	T* arr;
 	
 	/// <summary>
-	/// Всего элементов в массиве
+	/// Р’СЃРµРіРѕ СЌР»РµРјРµРЅС‚РѕРІ РІ РјР°СЃСЃРёРІРµ
 	/// </summary>
 	size_t size = 0;
 	
 	/// <summary>
-	/// Максимальная вместимость
+	/// РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РІРјРµСЃС‚РёРјРѕСЃС‚СЊ
 	/// </summary>
 	size_t capacity = 5;
 public:
 	/// <summary>
-	/// Конструктор по умолчанию
+	/// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 	/// </summary>
-	Vector()
-	{
-		// выделение памяти под массив
-		arr = new T[capacity];
-	}
+	Vector();
 
 	/// <summary>
-	/// Конструктор копирования
+	/// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
 	/// </summary>
 	/// <param name="vec"></param>
-	Vector(const Vector& vec) : capacity(vec.capacity)
-	{
-		size = vec.size;
-		arr = new T[capacity];
-		for (size_t i = 0; i < size; ++i)
-			arr[i] = vec.arr[i];
-	}
+	Vector(const Vector& vec);
 
-	/// Деструктор для освобождения памяти
-	~Vector() { delete[] arr; }
+	/// Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ РѕСЃРІРѕР±РѕР¶РґРµРЅРёСЏ РїР°РјСЏС‚Рё
+	~Vector();
 
 	/// <summary>
-	/// Функция получения размера вектора
+	/// Р¤СѓРЅРєС†РёСЏ РїРѕР»СѓС‡РµРЅРёСЏ СЂР°Р·РјРµСЂР° РІРµРєС‚РѕСЂР°
 	/// </summary>
 	/// <returns></returns>
-	size_t vec_size() const { return size; };
+	size_t vec_size() const;
 
 	/// <summary>
-	/// Функция для изменения размера вектора
+	/// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ СЂР°Р·РјРµСЂР° РІРµРєС‚РѕСЂР°
 	/// </summary>
 	/// <param name="new_size"></param>
-	void resize(size_t new_size)
-	{
-		capacity = new_size;
-		T* new_array = new T[capacity];
-		size_t count = new_size < capacity ? new_size : capacity;
-		for (size_t i = 0; i < count; ++i)
-			new_array[i] = arr[i];
-		delete[] arr;
-		arr = new_array;
-		capacity = new_size;
-	}
+	void resize(size_t new_size);
 
 	/// <summary>
-	/// Функция для добавления элемента в конец вектора
+	/// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ СЌР»РµРјРµРЅС‚Р° РІ РєРѕРЅРµС† РІРµРєС‚РѕСЂР°
 	/// </summary>
 	/// <param name="elem"></param>
-	void push_back(T elem)
-	{
-		arr[size] = elem;			// добавить элемент в конец
-		size++;						// увеличить число добавленных элементов
-		if (size >= capacity)		// если это число превышает макс. вместимость,
-			resize(capacity + 1);	// увеличить вместимость на 1
-	}
+	void push_back(T elem);
 
 	/// <summary>
-	/// Сортировка методом простого обмена
+	/// РЎРѕСЂС‚РёСЂРѕРІРєР° РјРµС‚РѕРґРѕРј РїСЂРѕСЃС‚РѕРіРѕ РѕР±РјРµРЅР°
 	/// </summary>
-	void selection_sort()
-	{
-		int i, j, min_idx;
-		for (i = 0; i < size - 1; i++)
-		{
-			min_idx = i;
-			for (j = i + 1; j < size; j++)
-				if (arr[j] < arr[min_idx])
-					min_idx = j;
-			T temp = arr[min_idx];
-			arr[min_idx] = arr[i];
-			arr[i] = temp;
-		}
-	}
+	void selection_sort();
 
 	/// <summary>
-	/// Линейный поиск элемента по ключу
+	/// Р›РёРЅРµР№РЅС‹Р№ РїРѕРёСЃРє СЌР»РµРјРµРЅС‚Р° РїРѕ РєР»СЋС‡Сѓ
 	/// </summary>
 	/// <param name="ind"></param>
 	/// <returns></returns>
-	T linear_search(int ind) 
-	{
-		for (int i = 0; i < size; i++)  // просмотр всех элементов массива
-			if (i == ind)				// если элемент с таким индексом найден, 
-				return arr[i];          // вернуть этот элемент массива
-		return INT_MAX;                 // отсюда вернуть макс. целое значение (элемент не найден в массиве)
-	}
+	T linear_search(size_t ind);
 
 	/// <summary>
-	/// Поиск максимального элемента
+	/// РџРѕРёСЃРє РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
 	/// </summary>
 	/// <returns></returns>
-	T find_max()
-	{
-		T max = arr[0];					// пусть максимальный - первый элемент
-		for (int i = 1; i < size; i++)  // просмотр всех элементов массива со второго
-			if (arr[i] > max)			// если текущий элемент больше максимального, то
-				max = arr[i];			// максимальный = этому элементу
-		return max;						// вернуть максимальный элемент массива
-	}
+	T find_max();
 
 	/// <summary>
-	/// Поиск минимального элемента
+	/// РџРѕРёСЃРє РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
 	/// </summary>
 	/// <returns></returns>
-	T find_min()
-	{
-		T min = arr[0];					// пусть минимальный - первый элемент
-		for (int i = 1; i < size; i++)  // просмотр всех элементов массива со второго
-			if (arr[i] < min)			// если текущий элемент меньше минимального, то
-				min = arr[i];			// минимальный = этому элементу
-		return min;						// вернуть минимальный элемент массива
-	}
+	T find_min();
 
 	/// <summary>
-	/// Метод удаления элемента из массива
+	/// РњРµС‚РѕРґ СѓРґР°Р»РµРЅРёСЏ СЌР»РµРјРµРЅС‚Р° РёР· РјР°СЃСЃРёРІР°
 	/// </summary>
 	/// <param name="i"></param>
-	void remove(int i)
-	{
-		if (i >= 0 && i < size)                         // если элемент найден
-		{
-			size = size - 1;							// уменьшить число элементов массива на 1
-			for (int j = i; j < size; j++)              // начиная с освободившейся позиции
-				arr[j] = arr[j + 1];					// сдвинуть элементы массива на 1 влево
-			T* newarr = new T[capacity];				// создать новый массив
-			copy(arr, arr + size, newarr);				// скопировать в него старый
-			arr = newarr;                               // перезаписать массив
-		}
-		else
-			cout << "Элемент с ключом " << i << " не найден в векторе!" << endl;
-	}
+	void remove(size_t i);
 
-	const Vector& operator=(const Vector& rhs) // оператор присваивания вектора
-	{
-		if (&rhs != this)
-		{
-			capacity = rhs.capacity;
-			size = rhs.size;
-			delete[] arr;
-			arr = new T[capacity];
-			for (size_t i = 0; i < vec_size(); ++i)
-				arr[i] = rhs.arr[i];
-		}
-		return *this;
-	}
+	const Vector& operator=(const Vector& rhs); // РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ РІРµРєС‚РѕСЂР°
 
-	const Vector& operator+(const Vector& rhs) // оператор сложения векторов поэлементно
-	{
-		size_t count;
-		if (size < rhs.size)
-			count = size;
-		else
-			count = rhs.size;
-		for (size_t i = 0; i < count; ++i)
-			this->arr[i] = this->arr[i] + rhs.arr[i];
-		return *this;
-	}
+	const Vector& operator+(const Vector& rhs); // РѕРїРµСЂР°С‚РѕСЂ СЃР»РѕР¶РµРЅРёСЏ РІРµРєС‚РѕСЂРѕРІ РїРѕСЌР»РµРјРµРЅС‚РЅРѕ
 
+	size_t& operator[](size_t size) const; // РѕРїРµСЂР°С‚РѕСЂ РїРѕР»СѓС‡РµРЅРёСЏ СЌР»РµРјРµРЅС‚Р° РІРµРєС‚РѕСЂР° РїРѕ РёРЅРґРµРєСЃСѓ
 
-	int& operator[](size_t size) const { return arr[size]; } // оператор получения элемента вектора по индексу
-
-	void print() // печать вектора
-	{
-		if (size <= 0)
-		{
-			cout << "Вектор пуст!" << endl;
-			return;
-		}
-		cout << "{";
-		for (size_t i = 0; i < vec_size() - 1; ++i)
-			cout << arr[i] << ", ";
-		cout << arr[vec_size() - 1] << "}" << endl;
-	}
+	void print(); // РїРµС‡Р°С‚СЊ РІРµРєС‚РѕСЂР°
 };
